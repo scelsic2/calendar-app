@@ -24,16 +24,6 @@ $(function () {
 
 // location variables
 var currentDayDisplayOnPage = document.querySelector("#currentDay");
-// jQuery Selectors. (n.d.). W3Schools. Retrieved March 18, 2023, from https://www.w3schools.com/jquery/jquery_selectors.asp
-// var AM9Div = $("#hour-9");
-// var AM10Div = $("#hour-10");
-// var AM11Div = $("#hour-11");
-// var PM12Div = $("#hour-12");
-// var PM01Div = $("#hour-13");
-// var PM02Div = $("#hour-14");
-// var PM03Div = $("#hour-15");
-// var PM04Div = $("#hour-16");
-// var PM05Div = $("#hour-17");
 
 var AM9Div = document.querySelector("#hour-9");
 var AM10Div = document.querySelector("#hour-10");
@@ -44,8 +34,6 @@ var PM02Div = document.querySelector("#hour-14");
 var PM03Div = document.querySelector("#hour-15");
 var PM04Div = document.querySelector("#hour-16");
 var PM05Div = document.querySelector("#hour-17");
-// var saveButton = document.querySelectorAll(".saveBtn")
-// console.log(saveButton);
 
 var AM9Button = document.querySelector("#btn-9");
 var AM9TextArea = document.querySelector("#text-9");
@@ -105,69 +93,25 @@ currentDayDisplayOnPage.innerHTML = pullCurrentDate;
 var currentHour = dayjs().format("H");
 console.log("The current hour is " + currentHour);
 
-for (i = 0; i < timeOnCalArray.length; i++){
-  if (timeOnCalArray[i].value == currentHour){
-    timeOnCalArray[i].div.classList.add("present");
-    timeOnCalArray[i].div.classList.remove("past");
-    timeOnCalArray[i].div.classList.remove("future");
-  } else if (timeOnCalArray[i].value < currentHour){
-    timeOnCalArray[i].div.classList.add("past");
-    timeOnCalArray[i].div.classList.remove("present");
-    timeOnCalArray[i].div.classList.remove("future");
-  } else if (timeOnCalArray[i].value > currentHour){
-    timeOnCalArray[i].div.classList.add("future");
-    timeOnCalArray[i].div.classList.remove("present");
-    timeOnCalArray[i].div.classList.remove("past");
-  }  
-}
+// tutoring 18MAR2023
+$.each(timeOnCalArray, function(i, eachTimeOnCal) {
+  var classListAction = eachTimeOnCal.div.classList;
+  classListAction.remove("future");
+  classListAction.remove("present");
+  classListAction.remove("past");
+
+  if (eachTimeOnCal.value == currentHour){
+    classListAction.add("present");
+  } else if (eachTimeOnCal.value < currentHour){
+    classListAction.add("past");
+  } else if (eachTimeOnCal.value > currentHour){
+    classListAction.add("future");
+  }
+}); 
+
 
 // ----------LOCAL STORAGE----------
 // Trying to use localStorage to store user-inputted text in textarea, but Save and Reload buttons are not working. (2022, January 1). Stack Overflow. Retrieved March 18, 2023, from https://stackoverflow.com/questions/70546999/trying-to-use-localstorage-to-store-user-inputted-text-in-textarea-but-save-and
-
-// var localStorageArray = [
-//   {button: AM9Button,
-//     area: AM9TextArea,
-//     timeKey: "9AM"},
-//   {button: AM10Button,
-//     area: AM10TextArea,
-//     timeKey: "10AM"},
-//   {button: AM11Button,
-//     area: AM11TextArea,
-//     timeKey: "11AM"},  
-//   {button: PM12Button,
-//     area: PM12TextArea,
-//     timeKey: "12PM"},  
-//   {button: PM01Button,
-//     area: PM01TextArea,
-//     timeKey: "01PM"},  
-//   {button: PM02Button,
-//     area: PM02TextArea,
-//     timeKey: "02PM"},
-//   {button: PM03Button,
-//     area: PM03TextArea,
-//     timeKey: "03PM"},
-//   {button: PM04Button,
-//     area: PM04TextArea,
-//     timeKey: "04PM"},
-//   {button: PM05Button,
-//     area: PM05TextArea,
-//     timeKey: "05PM"},
-// ]
-
-// for (i = 0; i < localStorageArray.length; i++){
-//   var selectingTimeKeyProperty = localStorageArray[i].timeKey;
-//   console.log(selectingTimeKeyProperty);
-
-//   var pullFromStorage = localStorage.getItem(selectingTimeKeyProperty);
- 
-//   var selectingAreaProperty = localStorageArray[i].area;
-//   selectingAreaProperty.innerHTML = pullFromStorage;
-  
-//   var selectingButtonProperty = localStorageArray[i].button;
-//   selectingButtonProperty.addEventListener("click", function saveToLocalStorage(){
-//     localStorage.setItem(selectingTimeKeyProperty, selectingAreaProperty)
-//   })
-// }
 
 AM9Entry = localStorage.getItem("9AM");
 console.log(AM9Entry);
@@ -251,6 +195,17 @@ PM05Button.addEventListener("click", function saveToLocalStorage05(){
   console.log(PM05TextArea.value);
 })
 // -------------FIRST ATTEMPT--------------------
+// jQuery Selectors. (n.d.). W3Schools. Retrieved March 18, 2023, from https://www.w3schools.com/jquery/jquery_selectors.asp
+// var AM9Div = $("#hour-9");
+// var AM10Div = $("#hour-10");
+// var AM11Div = $("#hour-11");
+// var PM12Div = $("#hour-12");
+// var PM01Div = $("#hour-13");
+// var PM02Div = $("#hour-14");
+// var PM03Div = $("#hour-15");
+// var PM04Div = $("#hour-16");
+// var PM05Div = $("#hour-17");
+
 // for (i = 0; i < timeOnCalArray.length; i++){
 //   if (timeOnCalArray[i].value == currentHour){
 //     timeOnCalArray[i].div.classList.add("present");
@@ -265,6 +220,69 @@ PM05Button.addEventListener("click", function saveToLocalStorage05(){
 //     timeOnCalArray[i].div.classList.remove("present");
 //     timeOnCalArray[i].div.classList.remove("past");
 //   }  
+// }
+
+// for (i = 0; i < timeOnCalArray.length; i++){
+//   if (timeOnCalArray[i].value == currentHour){
+//     timeOnCalArray[i].div.classList.add("present");
+//     timeOnCalArray[i].div.classList.remove("past");
+//     timeOnCalArray[i].div.classList.remove("future");
+//   } else if (timeOnCalArray[i].value < currentHour){
+//     timeOnCalArray[i].div.classList.add("past");
+//     timeOnCalArray[i].div.classList.remove("present");
+//     timeOnCalArray[i].div.classList.remove("future");
+//   } else if (timeOnCalArray[i].value > currentHour){
+//     timeOnCalArray[i].div.classList.add("future");
+//     timeOnCalArray[i].div.classList.remove("present");
+//     timeOnCalArray[i].div.classList.remove("past");
+//   }  
+// }
+// var saveButton = document.querySelectorAll(".saveBtn")
+// console.log(saveButton);
+
+// var localStorageArray = [
+//   {button: AM9Button,
+//     area: AM9TextArea,
+//     timeKey: "9AM"},
+//   {button: AM10Button,
+//     area: AM10TextArea,
+//     timeKey: "10AM"},
+//   {button: AM11Button,
+//     area: AM11TextArea,
+//     timeKey: "11AM"},  
+//   {button: PM12Button,
+//     area: PM12TextArea,
+//     timeKey: "12PM"},  
+//   {button: PM01Button,
+//     area: PM01TextArea,
+//     timeKey: "01PM"},  
+//   {button: PM02Button,
+//     area: PM02TextArea,
+//     timeKey: "02PM"},
+//   {button: PM03Button,
+//     area: PM03TextArea,
+//     timeKey: "03PM"},
+//   {button: PM04Button,
+//     area: PM04TextArea,
+//     timeKey: "04PM"},
+//   {button: PM05Button,
+//     area: PM05TextArea,
+//     timeKey: "05PM"},
+// ]
+
+// for (i = 0; i < localStorageArray.length; i++){
+//   var selectingTimeKeyProperty = localStorageArray[i].timeKey;
+//   console.log(selectingTimeKeyProperty);
+
+//   var pullFromStorage = localStorage.getItem(selectingTimeKeyProperty);
+ 
+//   var selectingAreaProperty = localStorageArray[i].area;
+//   selectingAreaProperty.innerHTML = pullFromStorage;
+  
+//   var selectingButtonProperty = localStorageArray[i].button;
+//   selectingButtonProperty.addEventListener("click", function saveToLocalStorage(){
+//     localStorage.setItem(selectingTimeKeyProperty, selectingAreaProperty)
+//   })
 // }
 
 // compare current time to timeblock time
